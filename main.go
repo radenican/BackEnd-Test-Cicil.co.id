@@ -4,12 +4,13 @@ import (
 	"database/sql"
 	"encoding/json"
 	"fmt"
+	"net/http"
+	"strconv"
+
 	"github.com/go-chi/chi"
 	"github.com/go-chi/chi/middleware"
 	_ "github.com/go-sql-driver/mysql"
-	"net/http"
 )
-
 
 var router *chi.Mux
 var db *sql.DB
@@ -23,10 +24,10 @@ const (
 
 // Phonebook type details
 type Phonebook struct {
-	ID      int    `json:"id"`
-	FullName   string `json:"fullname"`
+	ID           int    `json:"id"`
+	FullName     string `json:"fullname"`
 	MobileNumber string `json:"mobilenumber"`
-	HomeNumber string `json:"homenumber"`
+	HomeNumber   string `json:"homenumber"`
 }
 
 func init() {
@@ -87,11 +88,18 @@ func AllData(w http.ResponseWriter, r *http.Request) {
 func Create(w http.ResponseWriter, r *http.Request) {
 	var phonebook Phonebook
 	json.NewDecoder(r.Body).Decode(&phonebook)
-
+	if _, err := strconv.Atoi(string(phonebook.HomeNumber)); err != nil {
+		respondwithJSON(w, http.StatusMethodNotAllowed, map[string]string{"message": "Home Number is not valid"})
+		return
+	}
+	if _, err := strconv.Atoi(string(phonebook.MobileNumber)); err != nil {
+		respondwithJSON(w, http.StatusMethodNotAllowed, map[string]string{"message": "Mobile Number is not valid"})
+		return
+	}
 	query, err := db.Prepare("Insert phonebook SET fullname=? , mobilenumber=? , homenumber=? ")
 	catch(err)
 
-	_, er := query.Exec(phonebook.FullName, phonebook.MobileNumber , phonebook.HomeNumber)
+	_, er := query.Exec(phonebook.FullName, phonebook.MobileNumber, phonebook.HomeNumber)
 	catch(er)
 	defer query.Close()
 
@@ -113,7 +121,7 @@ func SelectedData(w http.ResponseWriter, r *http.Request) {
 	)
 
 	if err != nil {
-		respondWithError(w, http.StatusNotFound, "no data with id =  "+id  )
+		respondWithError(w, http.StatusNotFound, "no data with id =  "+id)
 		return
 	}
 
@@ -126,9 +134,18 @@ func Update(w http.ResponseWriter, r *http.Request) {
 	id := chi.URLParam(r, "id")
 	json.NewDecoder(r.Body).Decode(&updated)
 
+	if _, err := strconv.Atoi(string(updated.HomeNumber)); err != nil {
+		respondwithJSON(w, http.StatusMethodNotAllowed, map[string]string{"message": "Home Number is not valid"})
+		return
+	}
+	if _, err := strconv.Atoi(string(updated.MobileNumber)); err != nil {
+		respondwithJSON(w, http.StatusMethodNotAllowed, map[string]string{"message": "Mobile Number is not valid"})
+		return
+	}
+
 	query, err := db.Prepare("Update phonebook set fullname=?, mobilenumber=? , homenumber=? where id=?")
 	catch(err)
-	_, er := query.Exec(updated.FullName, updated.MobileNumber , updated.HomeNumber, id)
+	_, er := query.Exec(updated.FullName, updated.MobileNumber, updated.HomeNumber, id)
 	catch(er)
 
 	defer query.Close()

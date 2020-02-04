@@ -58,7 +58,9 @@ response
 
 body 
 `{
-"fullname" : "raden m Ikhsan " 
+    "fullname": "Ikhsan",
+    "mobilenumber": "222",
+    "homenumber": "111"
 }`
 response
 `{

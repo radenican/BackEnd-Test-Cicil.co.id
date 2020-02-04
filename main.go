@@ -25,8 +25,8 @@ const (
 type Phonebook struct {
 	ID      int    `json:"id"`
 	FullName   string `json:"fullname"`
-	MobileNumber int `json:"mobilenumber"`
-	HomeNumber int `json:"homenumber"`
+	MobileNumber string `json:"mobilenumber"`
+	HomeNumber string `json:"homenumber"`
 }
 
 func init() {

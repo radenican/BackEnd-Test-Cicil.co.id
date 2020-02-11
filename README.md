@@ -49,7 +49,8 @@ ex: postman / insomnia
 
 # Create
 /post http://localhost:8089/phonebook/create
-**body**
+<br/>
+**body** 
 `{
 "fullname" : "Ikhsan" ,
 "mobilenumber" : "082297383474" , 
@@ -57,8 +58,10 @@ ex: postman / insomnia
 }`
 
 # GET ALL DATA
-**response**
 /get http://localhost:8089/phonebook
+
+<br/>
+**response**
 `[
     {
         "id": 1,
@@ -76,6 +79,7 @@ ex: postman / insomnia
 
 # GET SELECTED DATA
 /get http://localhost:8089/phonebook/1
+<br/>
 **response**
 `{
     "id": 1,
@@ -87,13 +91,13 @@ ex: postman / insomnia
 
 # UPDATE
 /put http://localhost:8089/phonebook/update/1
-**body**
+ <br/> **body** <br/>
 `{
     "fullname": "Ikhsan",
     "mobilenumber": "222",
     "homenumber": "111"
 }`
-**response**
+ <br/> **response** <br/>
 
 `{
     "message": "update successfully"
@@ -101,7 +105,7 @@ ex: postman / insomnia
 
 # DELETE
  /delete http://localhost:8089/phonebook/delete/1
-**response**
+ <br/>**response** <br/>
 
 `{
     "message": "delete successfully"

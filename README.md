@@ -4,7 +4,7 @@
 go-chi <br/>
 go-sql-driver
 
-**run external package on default src folder ex: ``c:/go/src/`` ** 
+**run external package on default src folder ex: ``c:/go/src/`` **  <br/>
 $ go get -u github.com/go-chi/chi <br/>
 $ go get -u github.com/go-sql-driver/mysql
 

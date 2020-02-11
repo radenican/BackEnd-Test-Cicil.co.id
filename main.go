@@ -24,26 +24,25 @@ const (
 
 // Phonebook type details
 type Phonebook struct {
-	ID           int    `json:"id"`
-	FullName     string `json:"fullname"`
-	MobileNumber string `json:"mobilenumber"`
-	HomeNumber   string `json:"homenumber"`
+	ID           int    `json:"id,omitempty"`
+	FullName     string `json:"fullname,omitempty"`
+	MobileNumber string `json:"mobilenumber,omitempty"`
+	HomeNumber   string `json:"homenumber,omitempty"`
 }
 
 func init() {
 	router = chi.NewRouter()
 	router.Use(middleware.Recoverer)
-
 	var err error
-
+	//sql connection
 	dbSource := fmt.Sprintf("root:%s@tcp(%s:%s)/%s?charset=utf8", dbPass, dbHost, dbPort, dbName)
 	db, err = sql.Open("mysql", dbSource)
 	catch(err)
 }
 
+//routing
 func routers() *chi.Mux {
 	router.Get("/", ping)
-
 	router.Get("/phonebook", AllData)
 	router.Get("/phonebook/{id}", SelectedData)
 	router.Post("/phonebook/create", Create)
@@ -59,7 +58,6 @@ func ping(w http.ResponseWriter, r *http.Request) {
 }
 
 //-------------- API ENDPOINT ------------------//
-
 // Alldata
 func AllData(w http.ResponseWriter, r *http.Request) {
 	errors := []error{}
@@ -91,11 +89,13 @@ func Create(w http.ResponseWriter, r *http.Request) {
 	if _, err := strconv.Atoi(string(phonebook.HomeNumber)); err != nil {
 		respondwithJSON(w, http.StatusMethodNotAllowed, map[string]string{"message": "Home Number is not valid"})
 		return
-	}
+	} //check home number is not Numbers return not valid
+
 	if _, err := strconv.Atoi(string(phonebook.MobileNumber)); err != nil {
 		respondwithJSON(w, http.StatusMethodNotAllowed, map[string]string{"message": "Mobile Number is not valid"})
 		return
-	}
+	} //check mobile number is not Numbers return not valid
+
 	query, err := db.Prepare("Insert phonebook SET fullname=? , mobilenumber=? , homenumber=? ")
 	catch(err)
 
@@ -109,10 +109,8 @@ func Create(w http.ResponseWriter, r *http.Request) {
 // Selected
 func SelectedData(w http.ResponseWriter, r *http.Request) {
 	selected := Phonebook{}
-	id := chi.URLParam(r, "id")
-
+	id := chi.URLParam(r, "id") //get id
 	row := db.QueryRow("Select id, fullname, mobilenumber , homenumber  From phonebook where id=?", id)
-
 	err := row.Scan(
 		&selected.ID,
 		&selected.FullName,
@@ -131,17 +129,17 @@ func SelectedData(w http.ResponseWriter, r *http.Request) {
 // Update
 func Update(w http.ResponseWriter, r *http.Request) {
 	var updated Phonebook
-	id := chi.URLParam(r, "id")
+	id := chi.URLParam(r, "id") //get id
 	json.NewDecoder(r.Body).Decode(&updated)
 
 	if _, err := strconv.Atoi(string(updated.HomeNumber)); err != nil {
 		respondwithJSON(w, http.StatusMethodNotAllowed, map[string]string{"message": "Home Number is not valid"})
 		return
-	}
+	} //check home number is not Numbers return not valid
 	if _, err := strconv.Atoi(string(updated.MobileNumber)); err != nil {
 		respondwithJSON(w, http.StatusMethodNotAllowed, map[string]string{"message": "Mobile Number is not valid"})
 		return
-	}
+	} //check mobile number is not Numbers return not valid
 
 	query, err := db.Prepare("Update phonebook set fullname=?, mobilenumber=? , homenumber=? where id=?")
 	catch(err)
@@ -156,8 +154,7 @@ func Update(w http.ResponseWriter, r *http.Request) {
 
 // Delete
 func Delete(w http.ResponseWriter, r *http.Request) {
-	id := chi.URLParam(r, "id")
-
+	id := chi.URLParam(r, "id") //getid
 	query, err := db.Prepare("delete from phonebook where id=?")
 	catch(err)
 	_, er := query.Exec(id)
@@ -168,6 +165,6 @@ func Delete(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
-	routers()
-	http.ListenAndServe(":8089", Logger())
+	routers() //get routing
+	http.ListenAndServe(":8089", Logger()) //http run in port 8089
 }

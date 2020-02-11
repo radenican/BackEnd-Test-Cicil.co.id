@@ -4,7 +4,7 @@
 go-chi <br/>
 go-sql-driver
 
-**run** 
+**run external package on default src folder ex: ``c:/go/src/`` ** 
 $ go get -u github.com/go-chi/chi <br/>
 $ go get -u github.com/go-sql-driver/mysql
 
@@ -26,7 +26,7 @@ $ go get -u github.com/go-sql-driver/mysql
 go to main.go line 18 <br/>
 ``const (
 	dbName = "cicil_phonebook"
-	dbPass = ""
+	dbPass = "mysql"
 	dbHost = "localhost"
 	dbPort = "3306"
 )``
@@ -52,9 +52,9 @@ ex: postman / insomnia
 <br/>
 **body** 
 `{
-"fullname" : "Ikhsan" ,
-"mobilenumber" : "082297383474" , 
-"homenumber" : "022942131231"
+"fullname" : "Ikhsan3" ,
+"mobilenumber" : "+6282297383474" , 
+"homenumber" : "+6222942131231"
 }`
 
 # GET ALL DATA
@@ -63,17 +63,17 @@ ex: postman / insomnia
 <br/>
 **response**
 `[
-    {
-        "id": 1,
-        "fullname": "Ikhsan",
-        "mobilenumber": 0,
-        "homenumber": 0
+     {
+        "id": 14,
+        "fullname": "Ikhsan3",
+        "mobilenumber": "082297383474",
+        "homenumber": "022942131231"
     },
     {
-        "id": 2,
-        "fullname": "Ikhsan2",
-        "mobilenumber": 0,
-        "homenumber": 0
+        "id": 15,
+        "fullname": "Ikhsan3",
+        "mobilenumber": "+6282297383474",
+        "homenumber": "+6222942131231"
     }
 ]`
 
@@ -82,20 +82,20 @@ ex: postman / insomnia
 <br/>
 **response**
 `{
-    "id": 1,
-    "fullname": "Ikhsan",
-    "mobilenumber": 0,
-    "homenumber": 0
+    "id": 15,
+    "fullname": "Ikhsan3",
+    "mobilenumber": "+6282297383474",
+    "homenumber": "+6222942131231"
 }`
 
 
 # UPDATE
-/put http://localhost:8089/phonebook/update/1
+/put http://localhost:8089/phonebook/update/15
  <br/> **body** <br/>
 `{
     "fullname": "Ikhsan",
-    "mobilenumber": "222",
-    "homenumber": "111"
+    "mobilenumber": "+6282297383474",
+    "homenumber": "+219123109"
 }`
  <br/> **response** <br/>
 

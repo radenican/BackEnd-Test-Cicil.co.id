@@ -17,7 +17,7 @@ var db *sql.DB
 
 const (
 	dbName = "cicil_phonebook"
-	dbPass = ""
+	dbPass = "mysql"
 	dbHost = "localhost"
 	dbPort = "3306"
 )

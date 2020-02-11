@@ -16,8 +16,8 @@ $ go get -u github.com/go-sql-driver/mysql
 ``CREATE TABLE `phonebook` (
   `ID` int(11) NOT NULL,
   `fullname` varchar(100) NOT NULL,
-  `mobilenumber` int(11) NOT NULL,
-  `homenumber` int(11) NOT NULL
+  `mobilenumber` varchar(11) NOT NULL,
+  `homenumber` varchar(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 ``
 

@@ -1,6 +1,17 @@
-Create Table <br/>
-**cicil_phonebook** 
+# phone book cicil test backend 
 
+# External package
+go-chi <br/>
+go-sql-driver
+
+**run** 
+$ go get -u github.com/go-chi/chi <br/>
+$ go get -u github.com/go-sql-driver/mysql
+
+
+
+# Create DB
+**cicil_phonebook** 
 
 ``CREATE TABLE `phonebook` (
   `ID` int(11) NOT NULL,
@@ -10,16 +21,34 @@ Create Table <br/>
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 ``
 
-edit config db in main.go
 
-open terminal use
-<br/>dep init
+# edit config db
+go to main.go line 18
+const (
+	dbName = "cicil_phonebook"
+	dbPass = ""
+	dbHost = "localhost"
+	dbPort = "3306"
+)
 
-and build go with command
-<br/> go build
+# Identity your dependency
+Open Terminal go to your Workspace Location ex: c:/go/src/cicil
+**dep init**
+Enter
 
-//create / Post
-http://localhost:8089/phonebook/create
+
+# Running
+Open Terminal go to your Workspace Location ex: c:/go/src/cicil
+**go build**
+Enter
+Wait until finish 
+Open cicil.exe
+
+# Testing Open Rest application
+ex: postman / insomnia
+
+# Create
+/post http://localhost:8089/phonebook/create
 **body**
 `{
 "fullname" : "Ikhsan" ,
@@ -27,9 +56,9 @@ http://localhost:8089/phonebook/create
 "homenumber" : "022942131231"
 }`
 
-//getdata /get
+# GET ALL DATA
 **response**
-http://localhost:8089/phonebook
+/get http://localhost:8089/phonebook
 `[
     {
         "id": 1,
@@ -45,8 +74,9 @@ http://localhost:8089/phonebook
     }
 ]`
 
-//get data with selected id /get http://localhost:8089/phonebook/1
-response
+# GET SELECTED DATA
+/get http://localhost:8089/phonebook/1
+**response**
 `{
     "id": 1,
     "fullname": "Ikhsan",
@@ -54,21 +84,25 @@ response
     "homenumber": 0
 }`
 
-//update data /put http://localhost:8089/phonebook/update/1
 
-body 
+# UPDATE
+/put http://localhost:8089/phonebook/update/1
+**body**
 `{
     "fullname": "Ikhsan",
     "mobilenumber": "222",
     "homenumber": "111"
 }`
-response
+**response**
+
 `{
     "message": "update successfully"
 }`
 
-//delete data  /delete http://localhost:8089/phonebook/delete/1
-response
+# DELETE
+ /delete http://localhost:8089/phonebook/delete/1
+**response**
+
 `{
     "message": "delete successfully"
 }`

@@ -23,26 +23,26 @@ $ go get -u github.com/go-sql-driver/mysql
 
 
 # edit config db
-go to main.go line 18
-const (
+go to main.go line 18 <br/>
+``const (
 	dbName = "cicil_phonebook"
 	dbPass = ""
 	dbHost = "localhost"
 	dbPort = "3306"
-)
+)``
 
 # Identity your dependency
-Open Terminal go to your Workspace Location ex: c:/go/src/cicil
-**dep init**
+Open Terminal go to your Workspace Location ex: ``c:/go/src/cicil`` <br/>
+**dep init** <br/>
 Enter
 
 
 # Running
-Open Terminal go to your Workspace Location ex: c:/go/src/cicil
-**go build**
-Enter
-Wait until finish 
-Open cicil.exe
+Open Terminal go to your Workspace Location ex: ``c:/go/src/cicil`` <br/>
+**go build** <br/>
+Enter <br/>
+Wait until finish <br/>
+Open ``cicil.exe``
 
 # Testing Open Rest application
 ex: postman / insomnia

@@ -4,7 +4,7 @@
 go-chi <br/>
 go-sql-driver
 
-**run external package on default src folder ex: ``c:/go/src/`` **  <br/>
+**run external package on default src folder ex:**  ``c:/go/src/`` **  <br/>
 $ go get -u github.com/go-chi/chi <br/>
 $ go get -u github.com/go-sql-driver/mysql
 
@@ -16,8 +16,8 @@ $ go get -u github.com/go-sql-driver/mysql
 ``CREATE TABLE `phonebook` (
   `ID` int(11) NOT NULL,
   `fullname` varchar(100) NOT NULL,
-  `mobilenumber` varchar(11) NOT NULL,
-  `homenumber` varchar(11) NOT NULL
+  `mobilenumber` varchar(20) NOT NULL,
+  `homenumber` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 ``
 
